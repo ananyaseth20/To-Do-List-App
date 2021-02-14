@@ -7,7 +7,6 @@ import static model.Categories.HighPriority;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemTest {
-    // delete or rename this class!
 
     private Item i;
 
