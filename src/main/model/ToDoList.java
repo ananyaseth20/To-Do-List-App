@@ -14,26 +14,33 @@ public class ToDoList {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates item and adds it to list
+    // EFFECTS: creates item and adds it to list then sorts list
     public void insert(Item item) {
         toDoList.add(item);
+        sortByDueDate();
     }
 
     // REQUIRES: the list has at least removeIndex items
     // MODIFIES: this
-    // EFFECTS: removes item at given index in array
+    // EFFECTS: removes item at given index in array and sorts list
     public void remove(int removeIndex) {
-        int count = 1;
-        if (toDoList.size() < removeIndex) {
+        sortByDueDate();
+        int length = toDoList.size();
+        if (length < removeIndex) {
             System.out.println("Invalid input");
         } else {
-            for (Item i : toDoList) {
+            /*for (Item i : toDoList) {
                 if (count == removeIndex) {
                     toDoList.remove(i);
                     System.out.println("Removed successfully!");
                     break;
                 } else {
                     count++;
+                }
+            }*/
+            for (int i = 0; i < length; i++) {
+                if ((i + 1) == removeIndex) {
+                    toDoList.remove(getItemAtIndex(i + 1));
                 }
             }
         }
@@ -46,18 +53,22 @@ public class ToDoList {
         toDoList.sort(Comparator.comparing(Item::getDaysBeforeDue));
     }
 
+    // EFFECTS: returns size of to-do list
     public int getSize() {
         return toDoList.size();
     }
 
+    // EFFECTS: returns item at given index in to-do list
     public Item getItemAtIndex(int i) {
         return toDoList.get(i - 1);
     }
 
+    // EFFECTS: returns true if to-do list contains given item
     public boolean contains(Item item) {
         return toDoList.contains(item);
     }
 
+    // EFFECTS: returns index of given item in to-do list, -1 if not present
     public int returnIndex(Item item) {
         int count = 1;
         for (Item i: toDoList) {

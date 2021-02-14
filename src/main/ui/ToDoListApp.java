@@ -12,6 +12,7 @@ public class ToDoListApp {
     private ToDoList lowPriority;
     private Scanner scanner;
 
+    // EFFECTS: runs the to-do list application
     ToDoListApp() {
         runToDoList();
     }
@@ -23,7 +24,7 @@ public class ToDoListApp {
         boolean keepGoing = true;
         String command = null;
 
-        init();
+        initialize();
 
         while (keepGoing) {
             displayMenu();
@@ -42,13 +43,15 @@ public class ToDoListApp {
 
     // MODIFIES: this
     // EFFECTS: initializes lists
-    private void init() {
+    private void initialize() {
         highPriority = new ToDoList();
         midPriority = new ToDoList();
         lowPriority = new ToDoList();
         scanner = new Scanner(System.in);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user command
     private void processCommand(String command) {
         if (command.equals("1")) {
             insertItem();
@@ -70,9 +73,9 @@ public class ToDoListApp {
         display(lowPriority);
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays to-do list
     public void display(ToDoList toDoList) {
-        // print to-do list
-        toDoList.sortByDueDate();
         int length = toDoList.getSize();
         if (length == 0) {
             System.out.println("You have completed all your tasks! Yay!!");
@@ -83,6 +86,8 @@ public class ToDoListApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: accepts input from user and removes given item from appropriate list
     private void removeItem() {
         System.out.println("Which category do you want to remove an item from:");
         System.out.println("\tH -> high priority \n\tM -> medium priority \n\tL -> low priority");
@@ -98,6 +103,8 @@ public class ToDoListApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: accepts input from user and inserts given item into appropriate list
     private void insertItem() {
         System.out.println("What is the priority level of the task:");
         System.out.println("\tH -> high priority \n\tM -> medium priority \n\tL -> low priority");
@@ -124,6 +131,7 @@ public class ToDoListApp {
         System.out.println("Added successfully!");
     }
 
+    // EFFECTS: displays menu of options to user to choose from
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\t1 -> add item to to-do list");
