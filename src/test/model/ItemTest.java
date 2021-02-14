@@ -3,8 +3,12 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.Categories.HighPriority;
+import static model.Categories.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+/*
+ * Unit tests for Item class
+ */
 
 class ItemTest {
 

@@ -1,12 +1,16 @@
 package model;
 
-// represents each item in the list- it will have title, due date, category, isCompleted variables
+/*
+ * Represents each item in the list- it will have a title, due date, and category
+ */
+
 public class Item {
 
     private String name;
     private String daysBeforeDue;
     private Categories category;
 
+    // EFFECTS: creates new item with parameterized values
     public Item(String title, String daysBeforeDue, Categories category) {
         this.name = title;
         this.daysBeforeDue = daysBeforeDue;

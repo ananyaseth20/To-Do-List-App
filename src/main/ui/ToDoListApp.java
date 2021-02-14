@@ -6,6 +6,10 @@ import model.ToDoList;
 
 import java.util.*;
 
+/*
+ * To-do list application
+ */
+
 public class ToDoListApp {
     private ToDoList highPriority;
     private ToDoList midPriority;
@@ -17,12 +21,12 @@ public class ToDoListApp {
         runToDoList();
     }
 
-    // TellerApp
+    // source: TellerApp
     // MODIFIES: this
     // EFFECTS: processes user input
     private void runToDoList() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         initialize();
 
@@ -50,6 +54,15 @@ public class ToDoListApp {
         scanner = new Scanner(System.in);
     }
 
+    // EFFECTS: displays menu of options to user to choose from
+    private void displayMenu() {
+        System.out.println("\nSelect from:");
+        System.out.println("\t1 -> add item to to-do list");
+        System.out.println("\t2 -> remove item from to-do list");
+        System.out.println("\t3 -> view to-do list");
+        System.out.println("\t4 -> quit");
+    }
+
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
@@ -64,25 +77,37 @@ public class ToDoListApp {
         }
     }
 
-    private void viewList() {
-        System.out.println("High priority tasks:");
-        display(highPriority);
-        System.out.println("Medium priority tasks:");
-        display(midPriority);
-        System.out.println("Low priority tasks:");
-        display(lowPriority);
-    }
-
+    // REQUIRES: daysBeforeDue >= 0
     // MODIFIES: this
-    // EFFECTS: displays to-do list
-    public void display(ToDoList toDoList) {
-        int length = toDoList.getSize();
-        if (length == 0) {
-            System.out.println("You have completed all your tasks! Yay!!");
+    // EFFECTS: accepts input from user and inserts given item into appropriate list
+    private void insertItem() {
+        System.out.println("What is the priority level of the task: \n\tH -> high \n\tM -> medium \n\tL -> low");
+        char priorityLevel = scanner.next().toUpperCase().charAt(0);
+
+        while (priorityLevel != 'H' && priorityLevel != 'M' && priorityLevel != 'L') {
+            System.out.println("Invalid input, enter appropriate input:");
+            priorityLevel = scanner.next().toUpperCase().charAt(0);
         }
-        for (int i = 0; i < length; i++) {
-            String name = toDoList.getItemAtIndex(i).getName();
-            System.out.println((i + 1) + ". " + name + "- due in " + toDoList.getItemAtIndex(i).getDaysBeforeDue());
+
+        System.out.println("Enter the name of the task:");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+
+        String daysBeforeDue = acceptDaysBeforeDue();
+
+        Item item;
+
+        switch (priorityLevel) {
+            case 'H': item = new Item(name, daysBeforeDue, Categories.HighPriority);
+                highPriority.insert(item);
+                break;
+            case 'M': item = new Item(name, daysBeforeDue, Categories.MidPriority);
+                midPriority.insert(item);
+                break;
+            case 'L': item = new Item(name, daysBeforeDue, Categories.LowPriority);
+                lowPriority.insert(item);
+                break;
+            default: System.out.println("Invalid input");
         }
     }
 
@@ -92,51 +117,64 @@ public class ToDoListApp {
         System.out.println("Which category do you want to remove an item from:");
         System.out.println("\tH -> high priority \n\tM -> medium priority \n\tL -> low priority");
         char priorityLevel = scanner.next().toUpperCase().charAt(0);
+
+        while (priorityLevel != 'H' && priorityLevel != 'M' && priorityLevel != 'L') {
+            System.out.println("Invalid input, enter appropriate input:");
+            priorityLevel = scanner.next().toUpperCase().charAt(0);
+        }
+
         System.out.println("Enter the number of the item you want to remove:");
         int removeIndex = scanner.nextInt();
+
         if (priorityLevel == 'H') {
             highPriority.remove(removeIndex);
         } else if (priorityLevel == 'M') {
             midPriority.remove(removeIndex);
-        } else {
+        } else if (priorityLevel == 'L') {
             lowPriority.remove(removeIndex);
+        } else {
+            System.out.println("Invalid input");
         }
+    }
+
+    // EFFECTS: displays the 3 to-do lists to user
+    private void viewList() {
+        System.out.println("High priority tasks:");
+        display(highPriority);
+
+        System.out.println("Medium priority tasks:");
+        display(midPriority);
+
+        System.out.println("Low priority tasks:");
+        display(lowPriority);
+    }
+
+    private String acceptDaysBeforeDue() {
+        System.out.println("In how many days is it due?");
+        int days = scanner.nextInt();
+
+        if (days < 0) {
+            System.out.println("Invalid input");
+            runToDoList();
+            System.exit(0);
+        }
+
+        String daysBeforeDue = String.valueOf(days) + " day(s)";
+        return daysBeforeDue;
     }
 
     // MODIFIES: this
-    // EFFECTS: accepts input from user and inserts given item into appropriate list
-    private void insertItem() {
-        System.out.println("What is the priority level of the task:");
-        System.out.println("\tH -> high priority \n\tM -> medium priority \n\tL -> low priority");
-        char priorityLevel = scanner.next().toUpperCase().charAt(0);
-        System.out.println("Enter the name of the task:");
-        scanner.nextLine();
-        String name = scanner.nextLine();
-        System.out.println("In how many days is it due?");
-        String daysBeforeDue = scanner.next() + " day(s)";
-        Item item;
-        switch (priorityLevel) {
-            case 'H': item = new Item(name, daysBeforeDue, Categories.HighPriority);
-                      highPriority.insert(item);
-                      break;
-            case 'M': item = new Item(name, daysBeforeDue, Categories.MidPriority);
-                      midPriority.insert(item);
-                      break;
-            case 'L': item = new Item(name, daysBeforeDue, Categories.LowPriority);
-                      lowPriority.insert(item);
-                      break;
-            default:
-                System.out.println("Invalid input");
-        }
-        System.out.println("Added successfully!");
-    }
+    // EFFECTS: displays to-do list
+    public void display(ToDoList toDoList) {
+        int length = toDoList.getSize();
 
-    // EFFECTS: displays menu of options to user to choose from
-    private void displayMenu() {
-        System.out.println("\nSelect from:");
-        System.out.println("\t1 -> add item to to-do list");
-        System.out.println("\t2 -> remove item from to-do list");
-        System.out.println("\t3 -> view to-do list");
-        System.out.println("\t4 -> quit");
+        if (length == 0) {
+            System.out.println("You have completed all your tasks! Yay!!");
+        }
+
+        for (int i = 0; i < length; i++) {
+            String name = toDoList.getItemAtIndex(i + 1).getName();
+            System.out.println((i + 1) + ". " + name + "- due in " + toDoList.getItemAtIndex(i + 1).getDaysBeforeDue());
+        }
     }
 }

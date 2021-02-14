@@ -1,4 +1,9 @@
 package model;
 
-public enum Categories { HighPriority, MidPriority, LowPriority
+/*
+ * Represents possible categories in the to-do list
+ */
+
+public enum Categories {
+    HighPriority, MidPriority, LowPriority
 }

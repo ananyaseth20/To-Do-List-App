@@ -1,4 +1,4 @@
-# My Personal Project
+# Term Project
 
 ## To-Do List Application
 
