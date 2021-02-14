@@ -2,7 +2,7 @@ package model;
 
 // represents each item in the list- it will have title, due date, category, isCompleted variables
 public class Item {
-    // stub
+
     private String name;
     private String daysBeforeDue;
     private Categories category;

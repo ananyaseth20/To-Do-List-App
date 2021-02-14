@@ -26,7 +26,7 @@ public class ToDoList {
         // remove item from list
         //toDoList.remove(item);
         int count = 1;
-        if (toDoList.size() < removeIndex) {
+        if (toDoList.size() < removeIndex || toDoList.size() == 0) {
             System.out.println("Invalid input");
         } else {
             for (Item i : toDoList) {
