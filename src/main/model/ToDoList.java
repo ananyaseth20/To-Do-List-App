@@ -23,26 +23,26 @@ public class ToDoList {
     // MODIFIES: this
     // EFFECTS: removes item at given index in array
     public void remove(int removeIndex) {
-        // remove item from list
-        //toDoList.remove(item);
         int count = 1;
-        if (toDoList.size() < removeIndex || toDoList.size() == 0) {
+        if (toDoList.size() < removeIndex) {
             System.out.println("Invalid input");
         } else {
             for (Item i : toDoList) {
                 if (count == removeIndex) {
                     toDoList.remove(i);
+                    System.out.println("Removed successfully!");
                     break;
+                } else {
+                    count++;
                 }
-                count++;
             }
-            System.out.println("Removed successfully!");
         }
     }
 
+    // REQUIRES: the list is not empty
+    // MODIFIES: this
+    // EFFECTS: sorts the items in the list on the basis of when they are due(ascending order)
     public void sortByDueDate() {
-        // sort by date
-        //toDoList.sort();
         toDoList.sort(Comparator.comparing(Item::getDaysBeforeDue));
     }
 
