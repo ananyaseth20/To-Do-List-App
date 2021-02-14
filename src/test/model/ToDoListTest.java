@@ -73,4 +73,10 @@ public class ToDoListTest {
         toDoList.insert(item);
         assertEquals(toDoList.getItemAtIndex(1), item);
     }
+
+    @Test
+    public void testReturnIndexInvalid() {
+        toDoList.insert(item);
+        assertEquals(toDoList.returnIndex(item1), -1);
+    }
 }
