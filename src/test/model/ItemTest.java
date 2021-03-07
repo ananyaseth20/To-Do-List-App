@@ -16,12 +16,12 @@ class ItemTest {
 
     @BeforeEach
     public void runBefore() {
-        i = new Item("test", "1", HighPriority);
+        i = new Item("test", "1", HIGHPRIORITY);
     }
 
     @Test
     public void testGetName() {
-        assertEquals(i.getName(), "test");
+        assertEquals(i.getTitle(), "test");
     }
 
     @Test
@@ -31,6 +31,6 @@ class ItemTest {
 
     @Test
     public void testGetCategory() {
-        assertEquals(i.getCategory(), HighPriority);
+        assertEquals(i.getCategory(), HIGHPRIORITY);
     }
 }

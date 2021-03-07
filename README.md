@@ -19,3 +19,6 @@ Everyone! This application is for anyone that wants to be more organized in thei
 - As a user, I want to be able to categorise my tasks into one of three categories- 1. high priority (urgent); 2. mid priority (do soon); 3. low priority (do when free)
 - As a user, I want to be able to see my tasks sorted by due date
 - As a user, I want to be able to view my to-do list
+<br> (Phase 2)
+- As a user, I want to be able to be given the option to save my to-do list
+- As a user, I want to be able to reload my to-do list from file and pick up where I left off

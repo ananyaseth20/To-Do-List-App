@@ -17,9 +17,9 @@ public class ToDoListTest {
 
     @BeforeEach
     public void runBefore() {
-        toDoList = new ToDoList();
-        item = new Item("test", "2", Categories.HighPriority);
-        item1 = new Item("test1", "1", Categories.LowPriority);
+        toDoList = new ToDoList("name");
+        item = new Item("test", "2", Categories.HIGHPRIORITY);
+        item1 = new Item("test1", "1", Categories.LOWPRIORITY);
     }
 
     @Test

@@ -1,18 +1,28 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.*;
 
 /*
  * Represents a to-do list
  */
 
-public class ToDoList {
+public class ToDoList implements Writable {
 
-    public final ArrayList<Item> toDoList;
+    private String name;
+    private final ArrayList<Item> toDoList;
 
     // EFFECTS: initializes new ArrayList
-    public ToDoList() {
+    public ToDoList(String name) {
+        this.name = name;
         toDoList = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     // MODIFIES: this
@@ -36,6 +46,7 @@ public class ToDoList {
             for (int i = 0; i < length; i++) {
                 if ((i + 1) == removeIndex) {
                     toDoList.remove(getItemAtIndex(i + 1));
+                    System.out.println("Removed successfully!");
                 }
             }
         }
@@ -75,5 +86,26 @@ public class ToDoList {
         }
         System.out.println("Item not present");
         return -1;
+    }
+
+    // source: JSONSerializationDemo
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("toDoList", itemsToJson());
+        return json;
+    }
+
+    // source: JSONSerializationDemo
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Item t : toDoList) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 }

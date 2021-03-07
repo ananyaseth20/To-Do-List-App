@@ -3,7 +3,11 @@ package ui;
 import model.Categories;
 import model.Item;
 import model.ToDoList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /*
@@ -11,13 +15,18 @@ import java.util.*;
  */
 
 public class ToDoListApp {
-    private ToDoList highPriority;
-    private ToDoList midPriority;
-    private ToDoList lowPriority;
+
+    private static final String JSON_STORE = "./data/workroom.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    private ToDoList toDoList;
     private Scanner scanner;
 
     // EFFECTS: runs the to-do list application
     ToDoListApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runToDoList();
     }
 
@@ -35,7 +44,7 @@ public class ToDoListApp {
             command = scanner.next();
             command = command.toLowerCase();
 
-            if (command.equals("4")) {
+            if (command.equals("6")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -48,9 +57,7 @@ public class ToDoListApp {
     // MODIFIES: this
     // EFFECTS: initializes lists
     private void initialize() {
-        highPriority = new ToDoList();
-        midPriority = new ToDoList();
-        lowPriority = new ToDoList();
+        toDoList = new ToDoList("Anie's To-Do List");
         scanner = new Scanner(System.in);
     }
 
@@ -60,7 +67,9 @@ public class ToDoListApp {
         System.out.println("\t1 -> add item to to-do list");
         System.out.println("\t2 -> remove item from to-do list");
         System.out.println("\t3 -> view to-do list");
-        System.out.println("\t4 -> quit");
+        System.out.println("\t4 -> save work room to file");
+        System.out.println("\t5 -> load work room from file");
+        System.out.println("\t6 -> quit");
     }
 
     // MODIFIES: this
@@ -72,6 +81,10 @@ public class ToDoListApp {
             removeItem();
         } else if (command.equals("3")) {
             viewList();
+        } else if (command.equals("4")) {
+            saveToDoList();
+        } else if (command.equals("5")) {
+            loadToDoList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -84,10 +97,7 @@ public class ToDoListApp {
         System.out.println("What is the priority level of the task: \n\tH -> high \n\tM -> medium \n\tL -> low");
         char priorityLevel = scanner.next().toUpperCase().charAt(0);
 
-        while (priorityLevel != 'H' && priorityLevel != 'M' && priorityLevel != 'L') {
-            System.out.println("Invalid input, enter appropriate input:");
-            priorityLevel = scanner.next().toUpperCase().charAt(0);
-        }
+        priorityLevel = checkPriorityLevel(priorityLevel);
 
         System.out.println("Enter the name of the task:");
         scanner.nextLine();
@@ -98,55 +108,45 @@ public class ToDoListApp {
         Item item;
 
         switch (priorityLevel) {
-            case 'H': item = new Item(name, daysBeforeDue, Categories.HighPriority);
-                highPriority.insert(item);
+            case 'H': item = new Item(name, daysBeforeDue, Categories.HIGHPRIORITY);
+                toDoList.insert(item);
                 break;
-            case 'M': item = new Item(name, daysBeforeDue, Categories.MidPriority);
-                midPriority.insert(item);
+            case 'M': item = new Item(name, daysBeforeDue, Categories.MIDPRIORITY);
+                toDoList.insert(item);
                 break;
-            case 'L': item = new Item(name, daysBeforeDue, Categories.LowPriority);
-                lowPriority.insert(item);
+            case 'L': item = new Item(name, daysBeforeDue, Categories.LOWPRIORITY);
+                toDoList.insert(item);
                 break;
             default: System.out.println("Invalid input");
         }
+
+        System.out.println("Updated to-do list:");
+        display(toDoList);
+    }
+
+    private char checkPriorityLevel(char priorityLevel) {
+        while (priorityLevel != 'H' && priorityLevel != 'M' && priorityLevel != 'L') {
+            System.out.println("Invalid input, enter appropriate input:");
+            priorityLevel = scanner.next().toUpperCase().charAt(0);
+        }
+        return priorityLevel;
     }
 
     // MODIFIES: this
     // EFFECTS: accepts input from user and removes given item from appropriate list
     private void removeItem() {
-        System.out.println("Which category do you want to remove an item from:");
-        System.out.println("\tH -> high priority \n\tM -> medium priority \n\tL -> low priority");
-        char priorityLevel = scanner.next().toUpperCase().charAt(0);
-
-        while (priorityLevel != 'H' && priorityLevel != 'M' && priorityLevel != 'L') {
-            System.out.println("Invalid input, enter appropriate input:");
-            priorityLevel = scanner.next().toUpperCase().charAt(0);
-        }
-
+        display(toDoList);
         System.out.println("Enter the number of the item you want to remove:");
         int removeIndex = scanner.nextInt();
-
-        if (priorityLevel == 'H') {
-            highPriority.remove(removeIndex);
-        } else if (priorityLevel == 'M') {
-            midPriority.remove(removeIndex);
-        } else if (priorityLevel == 'L') {
-            lowPriority.remove(removeIndex);
-        } else {
-            System.out.println("Invalid input");
-        }
+        toDoList.remove(removeIndex);
+        System.out.println("Updated to-do list:");
+        display(toDoList);
     }
 
-    // EFFECTS: displays the 3 to-do lists to user
+    // EFFECTS: displays the to-do list to user
     private void viewList() {
-        System.out.println("High priority tasks:");
-        display(highPriority);
-
-        System.out.println("Medium priority tasks:");
-        display(midPriority);
-
-        System.out.println("Low priority tasks:");
-        display(lowPriority);
+        System.out.println("Tasks:");
+        display(toDoList);
     }
 
     private String acceptDaysBeforeDue() {
@@ -159,7 +159,7 @@ public class ToDoListApp {
             System.exit(0);
         }
 
-        String daysBeforeDue = String.valueOf(days) + " day(s)";
+        String daysBeforeDue = String.valueOf(days) + " days";
         return daysBeforeDue;
     }
 
@@ -173,8 +173,34 @@ public class ToDoListApp {
         }
 
         for (int i = 0; i < length; i++) {
-            String name = toDoList.getItemAtIndex(i + 1).getName();
-            System.out.println((i + 1) + ". " + name + "- due in " + toDoList.getItemAtIndex(i + 1).getDaysBeforeDue());
+            String name = toDoList.getItemAtIndex(i + 1).getTitle();
+            String days = toDoList.getItemAtIndex(i + 1).getDaysBeforeDue();
+            Categories priority = toDoList.getItemAtIndex(i + 1).getCategory();
+            System.out.println((i + 1) + ". " + name + ": due in " + days + " (" + priority + ")");
+        }
+    }
+
+    // EFFECTS: saves the to-do list to file
+    private void saveToDoList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(toDoList);
+            jsonWriter.close();
+
+            System.out.println("Saved " + toDoList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads to-do list from file
+    private void loadToDoList() {
+        try {
+            toDoList = jsonReader.read();
+            System.out.println("Loaded " + toDoList.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
