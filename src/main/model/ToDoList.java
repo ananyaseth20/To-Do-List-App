@@ -98,7 +98,7 @@ public class ToDoList implements Writable {
     }
 
     // source: JSONSerializationDemo
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this to-do list as a JSON array
     private JSONArray itemsToJson() {
         JSONArray jsonArray = new JSONArray();
 
