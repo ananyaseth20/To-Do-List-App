@@ -133,7 +133,7 @@ public class ToDoListApp {
     // EFFECTS: accepts input from user and removes given item from appropriate list
     private void removeItem() {
         viewList();
-        System.out.println("Enter the priority of the item you want to remove:");
+        System.out.println("Enter the priority of the item to remove: \n\tH -> high \n\tM -> medium \n\tL -> low");
         char c = scanner.next().toUpperCase().charAt(0);
         System.out.println("Enter the number of the item you want to remove: ");
         System.out.println("Note: If you enter a higher number, items from the next categories will be deleted");
