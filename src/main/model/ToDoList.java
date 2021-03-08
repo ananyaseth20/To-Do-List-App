@@ -116,6 +116,17 @@ public class ToDoList implements Writable {
         toDoList = newList;
     }
 
+    // EFFECTS: returns the last index of a particular category in the list
+    public int lastIndexOfCategory(Categories category) {
+        int lastIndex = 0;
+        for (int i = 0; i < toDoList.size(); i++) {
+            if (toDoList.get(i).getCategory().equals(category)) {
+                lastIndex = i;
+            }
+        }
+        return lastIndex;
+    }
+
     // source: JSONSerializationDemo
     @Override
     public JSONObject toJson() {

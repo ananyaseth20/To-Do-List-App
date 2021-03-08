@@ -68,8 +68,9 @@ public class ToDoListTest {
         toDoList.insert(item);
         toDoList.insert(item1);
         toDoList.sortByDueDate();
-        assertEquals(toDoList.returnIndex(item1), 1);
-        assertEquals(toDoList.returnIndex(item), 2);
+        toDoList.sortByCategory();
+        assertEquals(toDoList.returnIndex(item1), 2);
+        assertEquals(toDoList.returnIndex(item), 1);
     }
 
     @Test
@@ -82,5 +83,19 @@ public class ToDoListTest {
     public void testReturnIndexInvalid() {
         toDoList.insert(item);
         assertEquals(toDoList.returnIndex(item1), -1);
+    }
+
+    @Test
+    public void testLastIndexOfCategory() {
+        testInsertMultiple();
+        int lastIndex = toDoList.lastIndexOfCategory(Categories.LOWPRIORITY);
+        assertEquals(1, lastIndex);
+    }
+
+    @Test
+    public void testLastIndexOfCategoryNotPresent() {
+        testInsertMultiple();
+        int lastIndex = toDoList.lastIndexOfCategory(Categories.MIDPRIORITY);
+        assertEquals(0, lastIndex);
     }
 }
