@@ -41,7 +41,7 @@ public class ToDoList implements Writable {
         sortByCategory();
         int length = toDoList.size();
 
-        if (length < removeIndex || removeIndex < 0) {
+        if (length < removeIndex) {
             System.out.println("Invalid input");
         } else {
             for (int i = 0; i < length; i++) {

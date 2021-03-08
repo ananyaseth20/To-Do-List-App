@@ -135,23 +135,23 @@ public class ToDoListApp {
         viewList();
         System.out.println("Enter the priority of the item you want to remove:");
         char c = scanner.next().toUpperCase().charAt(0);
-        System.out.println("Enter the number of the item you want to remove:");
+        System.out.println("Enter the number of the item you want to remove: ");
+        System.out.println("Note: If you enter a higher number, items from the next categories will be deleted");
         int removeIndex = scanner.nextInt();
 
         int h = toDoList.lastIndexOfCategory(Categories.HIGHPRIORITY);
         int m = toDoList.lastIndexOfCategory(Categories.MIDPRIORITY);
-        int l = toDoList.lastIndexOfCategory(Categories.LOWPRIORITY);
 
         if (c == 'H' && (toDoList.getItemAtIndex(1).getCategory() != Categories.HIGHPRIORITY || h + 1 > removeIndex)) {
             removeIndex = -1;
         } else if (c == 'M') {
-            removeIndex = removeIndex + toDoList.lastIndexOfCategory(Categories.HIGHPRIORITY) + 1;
+            removeIndex = removeIndex + h + 1;
         } else if (c == 'L') {
-            removeIndex = removeIndex + toDoList.lastIndexOfCategory(Categories.HIGHPRIORITY) + m;
+            removeIndex = removeIndex + h + m + 1;
         }
         if (c == 'M' && h != 0 && toDoList.lastIndexOfCategory(Categories.MIDPRIORITY) == 0) {
             removeIndex = -1;
-        } else if (c == 'L' && (h != 0 || m != 0) && l == 0) {
+        } else if (c == 'L' && (h != 0 || m != 0) && toDoList.lastIndexOfCategory(Categories.LOWPRIORITY) == 0) {
             removeIndex = -1;
         }
 
