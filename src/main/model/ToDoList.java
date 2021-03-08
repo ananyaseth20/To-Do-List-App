@@ -33,7 +33,7 @@ public class ToDoList implements Writable {
         sortByCategory();
     }
 
-    // REQUIRES: the list has at least removeIndex items
+    // REQUIRES: the list has at least removeIndex items, if removeIndex != -1
     // MODIFIES: this
     // EFFECTS: removes item at given index in array and sorts list
     public void remove(int removeIndex) {
@@ -41,7 +41,7 @@ public class ToDoList implements Writable {
         sortByCategory();
         int length = toDoList.size();
 
-        if (length < removeIndex) {
+        if (length < removeIndex || removeIndex < 0) {
             System.out.println("Invalid input");
         } else {
             for (int i = 0; i < length; i++) {
