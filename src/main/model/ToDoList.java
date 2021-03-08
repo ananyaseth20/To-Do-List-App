@@ -13,7 +13,7 @@ import java.util.*;
 public class ToDoList implements Writable {
 
     private String name;
-    private final ArrayList<Item> toDoList;
+    private ArrayList<Item> toDoList;
 
     // EFFECTS: initializes new ArrayList
     public ToDoList(String name) {
@@ -30,7 +30,7 @@ public class ToDoList implements Writable {
     public void insert(Item item) {
         toDoList.add(item);
         sortByDueDate();
-        System.out.println("Added successfully!");
+        sortByCategory();
     }
 
     // REQUIRES: the list has at least removeIndex items
@@ -38,6 +38,7 @@ public class ToDoList implements Writable {
     // EFFECTS: removes item at given index in array and sorts list
     public void remove(int removeIndex) {
         sortByDueDate();
+        sortByCategory();
         int length = toDoList.size();
 
         if (length < removeIndex) {
@@ -86,6 +87,33 @@ public class ToDoList implements Writable {
         }
         System.out.println("Item not present");
         return -1;
+    }
+
+    // write in todolistapp
+    // REQUIRES: the list is not empty
+    // MODIFIES: this
+    // EFFECTS: sorts the items in the list on the basis of category
+    public void sortByCategory() {
+        ArrayList<Item> newList = new ArrayList<Item>();
+        // high priority
+        for (int i = 0; i < toDoList.size(); i++) {
+            if (toDoList.get(i).getCategory().equals(Categories.HIGHPRIORITY)) {
+                newList.add(toDoList.get(i));
+            }
+        }
+        // mid priority
+        for (int i = 0; i < toDoList.size(); i++) {
+            if (toDoList.get(i).getCategory().equals(Categories.MIDPRIORITY)) {
+                newList.add(toDoList.get(i));
+            }
+        }
+        // low priority
+        for (int i = 0; i < toDoList.size(); i++) {
+            if (toDoList.get(i).getCategory().equals(Categories.LOWPRIORITY)) {
+                newList.add(toDoList.get(i));
+            }
+        }
+        toDoList = newList;
     }
 
     // source: JSONSerializationDemo

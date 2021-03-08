@@ -43,8 +43,8 @@ public class ToDoListTest {
         testInsertMultiple();
         toDoList.remove(2);
         assertEquals(toDoList.getSize(), 1);
-        assertTrue(toDoList.contains(item1));
-        assertFalse(toDoList.contains(item));
+        assertTrue(toDoList.contains(item));
+        assertFalse(toDoList.contains(item1));
     }
 
     @Test
