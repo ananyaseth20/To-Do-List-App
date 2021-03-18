@@ -16,7 +16,7 @@ import java.util.*;
 
 public class ToDoListApp {
 
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/toDoList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
