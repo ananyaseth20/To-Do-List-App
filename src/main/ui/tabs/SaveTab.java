@@ -32,7 +32,7 @@ public class SaveTab extends Tab {
     private void saveAndQuitButton() {
         JButton btn = new JButton("Save and Quit");
 
-        btn.setBounds(130, 150, 150, 30);
+        btn.setBounds(150, 140, 150, 30);
 
         this.add(btn);
 

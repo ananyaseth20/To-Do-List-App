@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class LoadTab extends Tab {
+    private JLabel loadLabel;
     private JButton loadButton;
     private ViewTab viewTab;
     private ViewUrgentTab viewUrgentTab;
@@ -19,20 +20,27 @@ public class LoadTab extends Tab {
     public LoadTab(GUI controller) {
         super(controller);
         displayLoadButton();
+
+        loadLabel = new JLabel("Click on 'Load' to load the previously saved to-do list");
+
+        setLayout(null);
+
+        Dimension size = loadLabel.getPreferredSize();
+        loadLabel.setBounds(0, 10, size.width, size.height);
+        add(loadLabel);
     }
 
     // MODIFIES: this
     // EFFECTS: adds the load button to the panel and implements it
     public void displayLoadButton() {
         loadButton = new JButton("Load");
-        loadButton.setBounds(150, 100, 100, 30);
+        loadButton.setBounds(200, 150, 100, 30);
         add(loadButton);
 
         this.setBackground(Color.pink);
 
         loadButton.addActionListener(e -> loadTransactions());
 
-        setLayout(null);
         setVisible(true);
     }
 
