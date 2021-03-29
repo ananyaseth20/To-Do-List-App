@@ -29,8 +29,9 @@ public class ToDoList implements Writable {
     // EFFECTS: creates item and adds it to list then sorts list
     public void insert(Item item) {
         toDoList.add(item);
-        sortByDueDate();
-        sortByCategory();
+//        sortByDueDate();
+//        sortByCategory();
+        System.out.println("Added!");
     }
 
     // REQUIRES: the list has at least removeIndex items, if removeIndex != -1
@@ -146,5 +147,9 @@ public class ToDoList implements Writable {
         }
 
         return jsonArray;
+    }
+
+    public ArrayList<Item> getItems() {
+        return toDoList;
     }
 }

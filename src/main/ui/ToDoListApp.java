@@ -23,11 +23,15 @@ public class ToDoListApp {
     private ToDoList toDoList;
     private Scanner scanner;
 
+    private GUI gui;
+
     // EFFECTS: runs the to-do list application
-    ToDoListApp() {
+    public ToDoListApp() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        runToDoList();
+        toDoList = new ToDoList("To-Do List");
+        // runToDoList();
+        //gui = new GUI();
     }
 
     // source: TellerApp
@@ -57,7 +61,7 @@ public class ToDoListApp {
     // MODIFIES: this
     // EFFECTS: initializes lists
     private void initialize() {
-        toDoList = new ToDoList("Anie's To-Do List");
+        toDoList = new ToDoList("To-Do List");
         scanner = new Scanner(System.in);
     }
 
@@ -219,7 +223,7 @@ public class ToDoListApp {
     }
 
     // EFFECTS: saves the to-do list to file
-    private void saveToDoList() {
+    public void saveToDoList() {
         try {
             jsonWriter.open();
             jsonWriter.write(toDoList);
@@ -233,12 +237,56 @@ public class ToDoListApp {
 
     // MODIFIES: this
     // EFFECTS: loads to-do list from file
-    private void loadToDoList() {
+    public void loadToDoList() {
         try {
             toDoList = jsonReader.read();
             System.out.println("Loaded " + toDoList.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    public ToDoList getToDoList() {
+        return toDoList;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: displays items in toDoList
+    public ArrayList<String> displayItems() {
+        ArrayList<String> itemNames = new ArrayList<>();
+
+        if (toDoList.getItems().isEmpty()) {
+            itemNames.add("No More Tasks! Yay!!");
+        }
+
+        int i = 1;
+        for (Item item : toDoList.getItems()) {
+            Categories c = item.getCategory();
+            itemNames.add(i + ". " + item.getTitle() + " due in " + item.getDaysBeforeDue() + " days, " + c);
+            i++;
+        }
+
+        return itemNames;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: displays items in toDoList that are due today
+    public ArrayList<String> displayUrgentItems() {
+        ArrayList<String> urgentItemNames = new ArrayList<>();
+
+        if (toDoList.getItems().isEmpty()) {
+            urgentItemNames.add("No More Tasks! Yay!!");
+        }
+
+        int i = 1;
+        for (Item item : toDoList.getItems()) {
+            if (Integer.parseInt(item.getDaysBeforeDue()) <= 1) {
+                Categories c = item.getCategory();
+                urgentItemNames.add(i + ". " + item.getTitle() + " due in " + item.getDaysBeforeDue() + " days, " + c);
+                i++;
+            }
+        }
+
+        return urgentItemNames;
     }
 }
