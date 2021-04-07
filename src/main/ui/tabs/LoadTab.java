@@ -9,7 +9,6 @@ import ui.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class LoadTab extends Tab {
     private JLabel loadLabel;
@@ -39,14 +38,15 @@ public class LoadTab extends Tab {
 
         this.setBackground(Color.pink);
 
-        loadButton.addActionListener(e -> loadTransactions());
+        loadButton.addActionListener(e -> addFunctionality());
 
         setVisible(true);
     }
 
     // MODIFIES: this
     // EFFECTS: makes load button load previous data
-    private void loadTransactions() {
+    @Override
+    public void addFunctionality() {
         getController().getToDoListApp().loadToDoList();
         update();
 
@@ -62,9 +62,9 @@ public class LoadTab extends Tab {
     // EFFECTS: updates view and view urgent panels
     private void update() {
         viewTab = (ViewTab) getController().getView();
-        viewTab.viewToDoList();
+        viewTab.addFunctionality();
         viewUrgentTab = (ViewUrgentTab) getController().getViewUrgent();
-        viewUrgentTab.viewUrgentToDoList();
+        viewUrgentTab.addFunctionality();
     }
 
 }

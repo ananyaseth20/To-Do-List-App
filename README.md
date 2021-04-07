@@ -23,3 +23,5 @@ Everyone! This application is for anyone that wants to be more organized in thei
 <br> (Phase 2)
 - As a user, I want to be able to be given the option to save my to-do list
 - As a user, I want to be able to reload my to-do list from file and pick up where I left off
+<br> (Phase 4: Task 2)
+- Type hierarchy: Tab class is the superclass with subclasses AddTab, HomeTab, LoadTab, SaveTab, ViewTab, and ViewUrgentTab. Each subclass represents a different tab in the tabbed pane on the side bar. The parent class Tab has a method addFunctionality() which each subclass overrides and adds its own distinct functionality to the respective tab (eg.- in LoadTab, addFunctionality() calls the associated method to load the previously saved ToDoList every time the "Load" button is pressed by the user)

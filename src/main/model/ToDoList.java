@@ -29,8 +29,15 @@ public class ToDoList implements Writable {
     // EFFECTS: creates item and adds it to list then sorts list
     public void insert(Item item) {
         toDoList.add(item);
-//        sortByDueDate();
-//        sortByCategory();
+        sortByDueDate();
+        sortByCategory();
+        System.out.println("Added!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates item and adds it to list
+    public void insertGUI(Item item) {
+        toDoList.add(item);
         System.out.println("Added!");
     }
 

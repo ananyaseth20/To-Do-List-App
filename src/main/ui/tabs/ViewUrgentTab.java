@@ -30,12 +30,13 @@ public class ViewUrgentTab extends Tab {
 
         this.setBackground(Color.pink);
 
-        viewUrgentToDoList();
+        addFunctionality();
     }
 
     // MODIFIES: this
     // EFFECTS: displays to-do list
-    public void viewUrgentToDoList() {
+    @Override
+    public void addFunctionality() {
 
         removeAll();
 

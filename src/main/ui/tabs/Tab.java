@@ -5,14 +5,8 @@ package ui.tabs;
  * Credit: SmartHomeUI
  */
 
-
-import model.Item;
-import model.ToDoList;
 import ui.GUI;
-
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 
 public abstract class Tab extends JPanel {
 
@@ -25,18 +19,12 @@ public abstract class Tab extends JPanel {
         this.controller = controller;
     }
 
-    //EFFECTS: creates and returns row with button included
-    public JPanel formatButtonRow(JButton b) {
-        JPanel p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(b);
-
-        return p;
-    }
-
     //EFFECTS: returns the gui controller for this tab
     public GUI getController() {
         return controller;
     }
+
+    // EFFECTS: implements the functionality of that particular panel
+    public abstract void addFunctionality();
 
 }

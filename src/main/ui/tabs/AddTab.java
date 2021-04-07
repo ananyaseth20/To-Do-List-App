@@ -15,7 +15,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
@@ -102,13 +101,14 @@ public class AddTab extends Tab implements ActionListener {
             label.setText(field.getText());
             playSound("./data/Ding Sound Effect.wav");
 
-            itemAdded();
+            addFunctionality();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: makes a new item with the information entered and inserts it to the to-do list
-    private void itemAdded() {
+    @Override
+    public void addFunctionality() {
         String entered = field.getText();
         int name = entered.indexOf(',');
         int days = entered.lastIndexOf(',');
@@ -123,15 +123,14 @@ public class AddTab extends Tab implements ActionListener {
         }
 
         Item item = new Item(entered.substring(0, name), entered.substring(name + 2, days), category);
-        toDoListApp.getToDoList().insert(item);
+        toDoListApp.getToDoList().insertGUI(item);
 
         revalidate();
         repaint();
 
         viewTab = (ViewTab) getController().getView();
-        viewTab.viewToDoList();
+        viewTab.addFunctionality();
         viewUrgentTab = (ViewUrgentTab) getController().getViewUrgent();
-        viewUrgentTab.viewUrgentToDoList();
+        viewUrgentTab.addFunctionality();
     }
-
 }

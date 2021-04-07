@@ -30,13 +30,13 @@ public class ViewTab extends Tab {
 
         this.setBackground(Color.pink);
 
-        viewToDoList();
+        addFunctionality();
     }
 
     // MODIFIES: this
     // EFFECTS: displays to-do list
-    public void viewToDoList() {
-
+    @Override
+    public void addFunctionality() {
         removeAll();
         itemNames = getController().getToDoListApp().displayItems();
         itemsListOfLabels = new ArrayList<>();
@@ -56,5 +56,4 @@ public class ViewTab extends Tab {
         revalidate();
         repaint();
     }
-
 }

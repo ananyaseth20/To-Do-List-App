@@ -38,7 +38,7 @@ public class SaveTab extends Tab {
 
         this.add(saveLabel);
 
-        btn.addActionListener(e -> saveToDoList());
+        btn.addActionListener(e -> addFunctionality());
 
         setLayout(null);
         setVisible(true);
@@ -46,7 +46,8 @@ public class SaveTab extends Tab {
 
     // MODIFIES: this
     // EFFECTS: saves to-do list
-    private void saveToDoList() {
+    @Override
+    public void addFunctionality() {
         getController().getToDoListApp().saveToDoList();
         JLabel saved = new JLabel("To-Do List saved!");
         saved.setBounds(130, 120, 200, 30);

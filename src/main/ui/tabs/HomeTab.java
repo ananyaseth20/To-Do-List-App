@@ -17,6 +17,12 @@ public class HomeTab extends Tab {
 
     public HomeTab(GUI controller) {
         super(controller);
+        addFunctionality();
+
+    }
+
+    @Override
+    public void addFunctionality() {
         homeLabel = new JLabel("Welcome to your to-do list! Good luck!!");
 
         this.setLayout(null);
@@ -31,10 +37,9 @@ public class HomeTab extends Tab {
         ImageIcon image = new ImageIcon("./data/good luck cat.jpg");
         JLabel label = new JLabel("", image, JLabel.CENTER);
 
-//        size = label.getPreferredSize();
         label.setBounds(0, 0, 600, 400);
 
         this.add(label);
-
     }
+
 }
