@@ -40,7 +40,7 @@ public class ViewUrgentTab extends Tab {
 
         removeAll();
 
-        itemNames = getController().getToDoListApp().displayUrgentItems();
+        itemNames = getController().getToDoListApp().returnUrgentItems();
         itemsListOfLabels = new ArrayList<>();
 
         //itemsListOfLabels.toArray();

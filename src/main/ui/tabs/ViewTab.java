@@ -38,7 +38,7 @@ public class ViewTab extends Tab {
     @Override
     public void addFunctionality() {
         removeAll();
-        itemNames = getController().getToDoListApp().displayItems();
+        itemNames = getController().getToDoListApp().returnItems();
         itemsListOfLabels = new ArrayList<>();
 
         setLayout(null);

@@ -218,6 +218,8 @@ public class ToDoListApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays urgent items in to-do list that are due today
     private void displayUrgent(ToDoList toDoList) {
         int i = 1;
 
@@ -262,7 +264,7 @@ public class ToDoListApp {
 
     // MODIFIES: this
     // EFFECTS: displays items in toDoList
-    public ArrayList<String> displayItems() {
+    public ArrayList<String> returnItems() {
         ArrayList<String> itemNames = new ArrayList<>();
 
         if (toDoList.getItems().isEmpty()) {
@@ -281,7 +283,7 @@ public class ToDoListApp {
 
     // MODIFIES: this
     // EFFECTS: displays items in toDoList that are due today
-    public ArrayList<String> displayUrgentItems() {
+    public ArrayList<String> returnUrgentItems() {
         ArrayList<String> urgentItemNames = new ArrayList<>();
 
         if (toDoList.getItems().isEmpty()) {
