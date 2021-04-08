@@ -117,6 +117,7 @@ public class AddTab extends Tab implements ActionListener {
         if (categoryType == 'H') {
             category = Categories.HIGHPRIORITY;
         } else if (categoryType == 'M') {
+
             category = Categories.MIDPRIORITY;
         } else {
             category = Categories.LOWPRIORITY;

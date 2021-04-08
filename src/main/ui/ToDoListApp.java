@@ -1,8 +1,6 @@
 package ui;
 
-import model.Categories;
-import model.Item;
-import model.ToDoList;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -23,15 +21,12 @@ public class ToDoListApp {
     private ToDoList toDoList;
     private Scanner scanner;
 
-    private GUI gui;
-
     // EFFECTS: runs the to-do list application
     public ToDoListApp() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         toDoList = new ToDoList("To-Do List");
-        // runToDoList();
-        //gui = new GUI();
+//        runToDoList();
     }
 
     // source: TellerApp
@@ -190,6 +185,7 @@ public class ToDoListApp {
         display(midPriority);
         System.out.println("LOW PRIORITY: ");
         display(lowPriority);
+        displayUrgent(toDoList);
     }
 
     private String acceptDaysBeforeDue() {
@@ -218,7 +214,21 @@ public class ToDoListApp {
         for (int i = 0; i < length; i++) {
             String name = toDoList.getItemAtIndex(i + 1).getTitle();
             String days = toDoList.getItemAtIndex(i + 1).getDaysBeforeDue();
-            System.out.println((i + 1) + ". " + name + ": due in " + days);
+            System.out.println((i + 1) + ". " + name + ": due in " + days + " days");
+        }
+    }
+
+    private void displayUrgent(ToDoList toDoList) {
+        int i = 1;
+
+        System.out.println("Urgent Items:");
+
+        for (Item item : toDoList.getItems()) {
+            if (Integer.parseInt(item.getDaysBeforeDue()) <= 1) {
+                Categories c = item.getCategory();
+                System.out.println(i + ". " + item.getTitle() + " due in " + item.getDaysBeforeDue() + " days, " + c);
+                i++;
+            }
         }
     }
 

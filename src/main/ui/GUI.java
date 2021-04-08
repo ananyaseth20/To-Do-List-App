@@ -39,6 +39,7 @@ public class GUI extends JFrame {
         add(sidebar, BorderLayout.WEST);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //pack();
+
         setVisible(true);
     }
 
